@@ -1,19 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { Task } from "@/src/types/task";
 import TaskItem from "@/src/components/TaskItem";
+import { useAppSelector, useAppDispatch } from "../store/Provider";
+import { selectAllTasks, toggleCompletion } from "../store/taskSlice";
 
 export default function TaskList() {
-  const [tasks, setTasks] = useState<Task[]>([
-    { id: "1", title: "Finish NextJS setup", completed: true },
-    { id: "2", title: "Design task UI", completed: false },
-    { id: "3", title: "Connect database", completed: false },
-  ]);
+  const tasks = useAppSelector(selectAllTasks);
+  const dispatch = useAppDispatch();
 
   function toggleTask(id: string) {
     console.log("toggleTask start ");
-    setTasks((prev) => prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)));
+    dispatch(toggleCompletion(id));
     console.log("toggleTask finish ");
   }
 
