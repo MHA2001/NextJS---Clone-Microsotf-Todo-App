@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { DEFAULT_LIST_IDS, selectSelectedListId } from "./listSlice";
 import { Task } from "../types/task";
 import { RootState } from "./store";
 
@@ -57,7 +58,41 @@ export const taskSlice = createSlice({
     },
   },
 });
-export const selectAllTasks = (state: RootState) => state.tasks.tasks;
 export const { deleteTask, addTask, toggleCompletion, toggleMyDay, toggleImportant } =
   taskSlice.actions;
 export default taskSlice.reducer;
+
+// Task Selectors
+export const selectAllTasks = (state: RootState) => state.tasks.tasks;
+
+export const selectTasksForSelectedList = createSelector(
+  [selectAllTasks, selectSelectedListId],
+  (allTasks, selectedId) => {
+    const isToday = (date: Date | undefined): boolean => {
+      if (!date) return false;
+      const today = new Date();
+      return (
+        date.getDate() === today.getDate() &&
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()
+      );
+    };
+
+    switch (selectedId) {
+      case DEFAULT_LIST_IDS.MY_DAY:
+        return allTasks.filter((task) => task.isMyDay || isToday(task.dueDate));
+
+      case DEFAULT_LIST_IDS.IMPORTANT:
+        return allTasks.filter((task) => task.important);
+
+      case DEFAULT_LIST_IDS.PLANNED:
+        return allTasks.filter((task) => task.dueDate);
+
+      case DEFAULT_LIST_IDS.ALL:
+        return allTasks;
+
+      default:
+        return allTasks.filter((task) => task.listId === selectedId);
+    }
+  }
+);

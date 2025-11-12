@@ -2,16 +2,14 @@
 
 import TaskItem from "@/src/components/TaskItem";
 import { useAppSelector, useAppDispatch } from "../store/Provider";
-import { selectAllTasks, toggleCompletion } from "../store/taskSlice";
+import { selectTasksForSelectedList, toggleCompletion } from "../store/taskSlice";
 
 export default function TaskList() {
-  const tasks = useAppSelector(selectAllTasks);
+  const tasks = useAppSelector(selectTasksForSelectedList);
   const dispatch = useAppDispatch();
 
   function toggleTask(id: string) {
-    console.log("toggleTask start ");
     dispatch(toggleCompletion(id));
-    console.log("toggleTask finish ");
   }
 
   return (
