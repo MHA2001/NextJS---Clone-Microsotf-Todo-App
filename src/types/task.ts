@@ -9,4 +9,5 @@ export type Task = Readonly<{
   important: boolean;
   dueDate?: Date;
   updatedAt: Date;
+  isMyDay: boolean;
 };
