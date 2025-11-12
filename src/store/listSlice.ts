@@ -14,29 +14,29 @@ const initialLists: List[] = [
     id: DEFAULT_LIST_IDS.MY_DAY,
     name: "My Day",
     icon: "☀️",
-    createdAt: new Date(0),
-    updatedAt: new Date(0),
+    createdAt: new Date(0).toISOString(),
+    updatedAt: new Date(0).toISOString(),
   },
   {
     id: DEFAULT_LIST_IDS.IMPORTANT,
     name: "Important",
     icon: "⭐",
-    createdAt: new Date(0),
-    updatedAt: new Date(0),
+    createdAt: new Date(0).toISOString(),
+    updatedAt: new Date(0).toISOString(),
   },
   {
     id: DEFAULT_LIST_IDS.PLANNED,
     name: "Planned",
     icon: "🗓️",
-    createdAt: new Date(0),
-    updatedAt: new Date(0),
+    createdAt: new Date(0).toISOString(),
+    updatedAt: new Date(0).toISOString(),
   },
   {
     id: DEFAULT_LIST_IDS.ALL,
     name: "All",
     icon: "📋",
-    createdAt: new Date(0),
-    updatedAt: new Date(0),
+    createdAt: new Date(0).toISOString(),
+    updatedAt: new Date(0).toISOString(),
   },
 ];
 
@@ -61,8 +61,8 @@ export const listSlice = createSlice({
       const newList: List = {
         ...action.payload,
         id: crypto.randomUUID(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
       state.lists.push(newList);
     },
@@ -74,7 +74,7 @@ export const listSlice = createSlice({
     },
 
     customizeList: (state, action: PayloadAction<List>) => {
-      const updatedAtList = { ...action.payload, updatedAt: new Date() };
+      const updatedAtList = { ...action.payload, updatedAt: new Date().toISOString() };
 
       state.lists = state.lists.map((list) =>
         list.id === updatedAtList.id ? updatedAtList : list

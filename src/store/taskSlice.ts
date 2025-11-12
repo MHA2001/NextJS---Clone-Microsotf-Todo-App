@@ -20,7 +20,7 @@ export const taskSlice = createSlice({
       const task = state.tasks.find((t) => t.id === idToToggle);
       if (task) {
         task.completed = !task.completed;
-        task.updatedAt = new Date();
+        task.updatedAt = new Date().toISOString();
       }
     },
 
@@ -29,7 +29,7 @@ export const taskSlice = createSlice({
       const task = state.tasks.find((t) => t.id === idToToggle);
       if (task) {
         task.important = !task.important;
-        task.updatedAt = new Date();
+        task.updatedAt = new Date().toISOString();
       }
     },
 
@@ -38,7 +38,7 @@ export const taskSlice = createSlice({
       const task = state.tasks.find((t) => t.id === idToToggle);
       if (task) {
         task.isMyDay = !task.isMyDay;
-        task.updatedAt = new Date();
+        task.updatedAt = new Date().toISOString();
       }
     },
 
@@ -46,8 +46,8 @@ export const taskSlice = createSlice({
       const newTask: Task = {
         ...action.payload,
         id: crypto.randomUUID(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
       state.tasks.push(newTask);
     },
@@ -68,13 +68,14 @@ export const selectAllTasks = (state: RootState) => state.tasks.tasks;
 export const selectTasksForSelectedList = createSelector(
   [selectAllTasks, selectSelectedListId],
   (allTasks, selectedId) => {
-    const isToday = (date: Date | undefined): boolean => {
+    const isToday = (date: string | undefined): boolean => {
       if (!date) return false;
       const today = new Date();
+      const dataObject = new Date(date);
       return (
-        date.getDate() === today.getDate() &&
-        date.getMonth() === today.getMonth() &&
-        date.getFullYear() === today.getFullYear()
+        dataObject.getDate() === today.getDate() &&
+        dataObject.getMonth() === today.getMonth() &&
+        dataObject.getFullYear() === today.getFullYear()
       );
     };
 

@@ -1,9 +1,9 @@
 export type List = Readonly<{
   id: string;
-  createdAt: Date;
+  createdAt: string;
 }> & {
   name: string;
   icon?: string;
   color?: string;
-  updatedAt: Date;
+  updatedAt: string;
 };

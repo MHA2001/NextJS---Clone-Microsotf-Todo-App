@@ -2,12 +2,12 @@ import { List } from "./list";
 export type Task = Readonly<{
   id: string;
   listId: List["id"]; // Connects the task to a specific list
-  createdAt: Date;
+  createdAt: string;
 }> & {
   title: string;
   completed: boolean;
   important: boolean;
-  dueDate?: Date;
-  updatedAt: Date;
+  dueDate?: string;
+  updatedAt: string;
   isMyDay: boolean;
 };
