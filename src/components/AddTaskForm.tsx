@@ -18,7 +18,7 @@ export default function AddTaskForm() {
       title: title.trim(),
       listId: selectedListId,
       completed: false,
-      important: false,
+      important: selectedListId === "important",
       isMyDay: selectedListId === "my-day",
     };
 
