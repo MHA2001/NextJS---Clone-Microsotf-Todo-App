@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store/Provider";
 import { addTask } from "../store/taskSlice";
-import { selectSelectedListId } from "../store/listSlice";
+import { selectSelectedListId, DEFAULT_LIST_IDS } from "../store/listSlice";
 import { Task } from "../types/task";
 
 export default function AddTaskForm() {
@@ -14,9 +14,11 @@ export default function AddTaskForm() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!title.trim()) return;
+    const listId = Object.values(DEFAULT_LIST_IDS).includes(selectedListId) ? null : selectedListId;
+
     const newTaskPayload: Omit<Task, "id" | "createdAt" | "updatedAt"> = {
       title: title.trim(),
-      listId: selectedListId,
+      listId,
       completed: false,
       important: selectedListId === "important",
       isMyDay: selectedListId === "my-day",

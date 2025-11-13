@@ -26,10 +26,7 @@ export default function TaskItem({ task }: TaskItemProps) {
   }
 
   return (
-    <div
-      className="flex items-center gap-3 p-3 rounded-md hover:bg-neutral-800 cursor-pointer transition-all border border-neutral-700"
-      onClick={() => onToggle(task.id)}
-    >
+    <div className="flex items-center gap-3 p-3 rounded-md hover:bg-neutral-800  transition-all border border-neutral-700">
       <input
         name="TaskCompletionInput"
         type="checkbox"
